@@ -2,16 +2,16 @@ const { SlashCommandBuilder } = require('@discordjs/builders');
 
 module.exports = {
 	data: new SlashCommandBuilder()
-		.setName('add-points')
-		.setDescription('Adds points to a user.')
+		.setName('set-points')
+		.setDescription('Sets the number of points a user has.')
         .addUserOption(option => {
             return option.setName('person')
-            .setDescription('The person to add points to.')
+            .setDescription('The person to set the number of points for.')
             .setRequired(true);
         })
         .addIntegerOption(option => {
             return option.setName('amount')
-            .setDescription('The number of points to award.')
+            .setDescription('The number of points to set for that person.')
             .setRequired(true);
         }),
 	async execute(interaction) {
@@ -21,7 +21,7 @@ module.exports = {
 
 async function processCommand(interaction) {
     const person = interaction.options.getUser('person');
-    const amount = Math.abs(interaction.options.getInteger('amount'));
+    const amount = interaction.options.getInteger('amount');
 
-    await interaction.reply(`Awarding ${amount} point(s) to ${person}`);
+    await interaction.reply(`Setting ${person}'s total points to ${amount}`);
 }
