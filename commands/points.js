@@ -29,5 +29,5 @@ async function processCommand(interaction) {
         return;
     }
     
-    runPermissionCheck(interaction, person => callback(person));
+    runPermissionCheck(interaction, () => callback(person));
 }
