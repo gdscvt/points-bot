@@ -1,4 +1,5 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
+const { setPoints, runPermissionCheck } = require('../util.js');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -20,8 +21,12 @@ module.exports = {
 };
 
 async function processCommand(interaction) {
-    const person = interaction.options.getUser('person');
-    const amount = interaction.options.getInteger('amount');
+    runPermissionCheck(interaction, () => {
+        const person = interaction.options.getUser('person');
+        const amount = interaction.options.getInteger('amount');
 
-    await interaction.reply(`Setting ${person}'s total points to ${amount}`);
+        setPoints(person, amount);
+
+        interaction.reply(`Setting ${person}'s total points to ${amount}`);
+    });
 }

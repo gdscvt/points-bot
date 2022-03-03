@@ -1,4 +1,4 @@
-const { clientId, token, guildId } = require('./config.json');
+const { clientId, token, guildId, adminRole } = require('./config.json');
 const Discord = require('discord.js');
 const fs = require('fs');
 const { REST } = require('@discordjs/rest');
@@ -11,6 +11,11 @@ const client = new Discord.Client({
         Discord.Intents.FLAGS.DIRECT_MESSAGES,
     ],
 });
+
+module.exports = {
+    client: client,
+    adminRole: adminRole
+};
 
 const commandFiles = fs.readdirSync(`./commands`).filter(file => file.endsWith(".js"));
 
@@ -47,7 +52,6 @@ client.once('ready', async () => {
         }
     })();
     console.log('Bot Is Ready On Discord!');
-
 });
 
 client.on('interactionCreate', async interaction => {
